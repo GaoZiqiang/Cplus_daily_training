@@ -1,2 +1,2 @@
 ## Introduction
-The code repository of C++ daily training.
+The code repository of C++ daily training.	
