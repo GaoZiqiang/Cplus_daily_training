@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "line.h"
+#include "stock.h"
 
 int main(){
 
