@@ -58,13 +58,32 @@ void Stock::show() const{
 }
 
 
+const int STKS = 2;
 
 int main(){
-    Stock stock3;// 将使用默认构造器
-    Stock stock = Stock(5.1, 10);
-    stock.update();
-    //cout << "stock before changing" << endl;
-    stock.show();
+    // 对象数组
+    // 使用默认构造函数进行对象数组初始化
+//    Stock mystuff[4];// 使用默认构造函数初始化对象数组，因此会调用4次默认构造函数
+//    mystuff[0].update();
+//    mystuff[0].show();
+
+    // 使用显式构造函数初始化对象数组
+    Stock stocks[STKS] = {
+            Stock(1.0,10),
+            Stock(2.0,20)
+    };
+    int st;
+    for (st = 0;st < STKS;st++){
+        stocks[st].update();
+        stocks[st].show();
+    }
+//    stocks[0].update();
+//    stocks[0].show();
+//    Stock stock3;// 将使用默认构造器
+//    Stock stock = Stock(5.1, 10);
+//    stock.update();
+//    //cout << "stock before changing" << endl;
+//    stock.show();
 //    stock.setShares(20);
 //    cout << endl;
 //    cout << "stock after changing" << endl;

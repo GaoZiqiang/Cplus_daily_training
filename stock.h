@@ -12,7 +12,7 @@ private:// 这样类对象/程序就不能直接访问这些成员，只能通�
     double total_val;
 
     // 类的内联函数，在函数声明时直接进行函数实现
-    void setTotalVal(){
+    void setTotalVal() {
         total_val = share_val * shares;
     }
 
