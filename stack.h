@@ -1,3 +1,5 @@
+/*抽象函数定义*/
+
 #include <iostream>
 #pragma once
 
@@ -16,5 +18,5 @@ public:
     bool isempty() const;
     bool isfull() const;
     bool push(const Item &item);// 为什么要用const来修饰呢？
-    bool pop(Item &item);
+    bool pop();// pop()函数为什么还需要参数呢？
 };
