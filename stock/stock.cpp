@@ -1,5 +1,5 @@
 //Line类定义
-#include "../stock.h"
+#include "stock.h"
 #include <iostream>
 
 using namespace std;
