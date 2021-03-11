@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include "time.h"
 
 using namespace std;
@@ -13,7 +14,8 @@ int main(){
     Time total;
     Time total1;
     Time diff;
-    Time mult_result;
+    Time right_mult_result;
+    Time left_mult_result;
 
     cout << "planning time = ";
     planning.Show();
@@ -46,10 +48,28 @@ int main(){
     diff.Show();
     cout << endl;
 
-    mult_result = t1 * 2.0;
-    cout << "mult_result of t1 * 2.0 is ";
-    mult_result.Show();
+    // 使用友元函数进行左乘运算
+    left_mult_result = 3 * coding;
+    cout << "left_mult_result of 2.0 * coding is ";
+    left_mult_result.Show();
     cout << endl;
+
+    // 使用乘法重载运算符进行右乘运算
+    right_mult_result = coding * 2.0;
+    cout << "right_mult_result of coding * 2.0 is ";
+    right_mult_result.Show();
+    cout << endl;
+
+
+    // 使用<<重载运算符输出Time对象
+    cout << "使用<<重载运算符输出right_mult_result对象: " << right_mult_result << endl;// 调用ostream的cout对象
+
+
+    // 将结果写入文件
+    fstream fout;
+    cout << "将结果写入本地文件" << endl;
+    fout.open("/home/gaoziqiang/temp/savetime.txt");
+    fout << left_mult_result;
 
     return 0;
 }

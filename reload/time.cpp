@@ -40,13 +40,22 @@ Time Time::operator-(const Time &t) const {
     Time diff;
     int tot1,tot2;
     tot1 = t.minutes + 60 * t.hours;
-    tot2 = minutes + 60 * hours;
+    tot2 = minutes + 60 * hours;// 调用对象本身
     diff.hours = (tot2 - tot1) / 60;
     diff.minutes = (tot2 - tot1) % 60;
 
     return diff;
 }
 
+//Time Time::operator*(double mult) const {// 参数mult是待夸大的倍数
+//    Time result;
+//    long totalminutes = hours * 60 * mult + minutes * mult;
+//    result.hours = totalminutes / 60;
+//    result.minutes = totalminutes % 60;
+//
+//    return result;
+//}
+// 这里是右乘的重载函数的定义 A = B * 2
 Time Time::operator*(double mult) const {
     Time result;
     long totalminutes = hours * 60 * mult + minutes * mult;
@@ -54,6 +63,12 @@ Time Time::operator*(double mult) const {
     result.minutes = totalminutes % 60;
 
     return result;
+}
+
+// 友元函数<<的定义 不理解为什么用指针函数
+ostream & operator<<(ostream & os,const Time & t) {
+    os << t.hours << " hours " << t.minutes << " minutes ";
+    return os;
 }
 
 void Time::Show() const {
