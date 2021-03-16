@@ -33,6 +33,9 @@ Time Time::operator+(const Time &t) const {
     sum.hours = hours + t.hours + sum.minutes / 60;
     sum.minutes %= 60;
 
+    // 测试
+    //t.hours = sum.hours;
+
     return sum;// 函数返回值为Time对象
 }
 

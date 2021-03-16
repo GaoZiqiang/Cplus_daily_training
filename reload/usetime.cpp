@@ -1,5 +1,5 @@
 #include <iostream>
-#include <fstream>
+#include <fstream>// 因time.cpp文件中已经引入了fstream文件，因此在usetime.cpp中不需要再引入一次了
 #include "time.h"
 
 using namespace std;
@@ -30,8 +30,9 @@ int main(){
     cout << endl;
 
     // 有两种方法调用重载后的加法运算符
-    //total = coding + fixing;// 使用运算符表示法
-    total = coding.operator+(fixing);// 使用函数表示法
+    total = coding + fixing;// 使用运算符表示法
+    total = fixing + coding;
+    //total = coding.operator+(fixing);// 使用函数表示法
     cout << "total time of coding and fixing is ";
     total.Show();
     cout << endl;
@@ -49,7 +50,7 @@ int main(){
     cout << endl;
 
     // 使用友元函数进行左乘运算
-    left_mult_result = 3 * coding;
+    left_mult_result = 3.0 * coding;
     cout << "left_mult_result of 2.0 * coding is ";
     left_mult_result.Show();
     cout << endl;
