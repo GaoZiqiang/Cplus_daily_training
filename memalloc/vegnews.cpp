@@ -20,19 +20,33 @@ int main() {
         cout << "headline2: " << headline2 << endl;
         cout << "headline3: " << headline3 << endl;
 
-        cout << "headline1 by callme2:\n";
-        callme2(headline1);
-        cout << "headline1: " << headline1 <<endl;
+//        cout << "headline1 by callme2:\n";
+//        callme2(headline1);
+//        cout << "headline1: " << headline1 <<endl;
+//
+//        cout << "headline2 by callme2:\n";
+//        callme2(headline2);
+//        cout << "headline2: " << headline2 << endl;
+//
+//        cout << "headline3 by callme2:\n";
+//        callme2(headline3);
+//        cout << "headline3: " << headline3 << endl;
+//
+//        callme2(headline3);
 
-        cout << "headline2 by callme2:\n";
-        callme2(headline2);
-        cout << "headline2: " << headline2 << endl;
+        // 测试复制构造函数
 
-        cout << "headline3 by callme2:\n";
-        callme2(headline3);
-        cout << "headline3: " << headline3 << endl;
+        // 该对象定义方法使用的是复制构造函数
+        StringBad sailor = headline3;
 
-        callme2(headline3);
+        // 该种定义方式也是复制构造函数
+        StringBad knot;
+        knot = headline2;
+
+        // 第三种：也是复制构造函数
+        StringBad cook = StringBad(headline1);
+
+        cout << "sailor:" << sailor << endl;
     }
 }
 
