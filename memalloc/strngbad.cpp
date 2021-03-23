@@ -6,7 +6,7 @@ using namespace std;
 // 初始化静态类成员
 int StringBad::num_strings = 0;
 
-// 自定义构造函数
+// 自定义构造函数 只有一个参数的构造函数可以用作转换函数，因此该构造函数可以通过StringBad s = "Hello World"进行赋值
 StringBad::StringBad(const char *s) {
     len = strlen(s);
 
@@ -53,7 +53,7 @@ void showScope() {
 }
 
 int main() {
-    StringBad s;// 使用构造函数生成对象
+    StringBad s = "gaoziqiang";// 使用构造函数生成对象
     // 调用showScope()，测试析构函数的调用时机
 //    showScope();
 
@@ -61,7 +61,7 @@ int main() {
     // 复制构造函数只进行简单的shallow copy，只复制指针的值，并不复制/开辟内存空间
     // s2、s3析构的时候导致删除同一块内存两次，从而发生内存错误
 //    StringBad s2 = StringBad(s);// 并不使用构造函数生成对象，应该重新定义拷贝构造函数
-    StringBad s3 = s;// 并不使用构造函数生成对象，应该重新定义一个赋值运算符函数
+    //StringBad s3 = s;// 并不使用构造函数生成对象，应该重新定义一个赋值运算符函数
 
     // StringBad sb("hello");
     //cout << "Initial num_strings is" << sb::num_strings;

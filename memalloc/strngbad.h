@@ -28,7 +28,7 @@ public:
 
     // 重新定义拷贝构造函数
     StringBad (const StringBad & st) {
-        num_strings ++;
+        num_strings ++;// 因为是拷贝，所以并不会删除原来的
         len  =st.len;
         str = new char [len + 1];
         strcpy(str,st.str);
@@ -37,13 +37,13 @@ public:
 
     // 重新定义赋值运算符=
     // 但是要注意的是：在我使用的这个C++编译器的版本中，不需要重新定义赋值运算符
-    StringBad & operator=(const StringBad & st) {
-        // 自检查
+    StringBad & operator=(const StringBad & st) {// 注意：这里的& st中st是String对象类型
+        // 1自检查
         if (this == &st)
             return *this;// 赋值给自身
-
+        // 2删除原来字符串
         delete [] str;// 将原来的那个str释放掉
-
+        // 3深拷贝
         len = st.len;
         str = new char [len + 1];// 开辟一块新的区域
         strcpy(str,st.str);// 将st的值赋值给新变量
