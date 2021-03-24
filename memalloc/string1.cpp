@@ -4,6 +4,7 @@
 
 using std::cin;
 using std::cout;
+using std::endl;
 //using std::ostream;
 //using std::istream;
 
@@ -19,18 +20,25 @@ int String::HowMany() {
 
 // 构造函数
 String::String(const char * s) {
-    len = std::strlen(s);
-    str = new char[len + 1];
-    std::strcpy(str,s);
+    len = std::strlen(s);// 先计算s的长度
+    str = new char[len + 1];// 为str开辟内存
+    std::strcpy(str,s);// 将s的内容复制到str中
     num_strings ++;
 }
 
 // 默认构造函数
 String::String() {
     len = 4;
-    str = new char[1];
-    str[0] = '\0';// 默认字符串
+    str = new char[1];// 不适用new char;是为了和析构函数中的delete []兼容
+    str[0] = '\0';// 默认字符串'\0'是结束标志位 可以修改为str = 0;
     num_strings ++;
+
+    // 或者这样
+//    len = 0;
+//    str = nullptr;
+//    std::cout << "num_strings " << num_strings << std::endl;
+//    std::cout << "str " << str << std::endl;
+//    std::cout << "test str" << std::endl;
 }
 
 // 拷贝构造函数
@@ -45,7 +53,7 @@ String::String(const String & st) {
 // 析构函数
 String::~String() {
     --num_strings;
-    delete [] str;
+    delete [] str;// String等于str[]字符数组 因此应该用delete[]来作为析构函数
 }
 
 
@@ -122,4 +130,40 @@ istream & operator>>(istream & is,String & st) {// 注意：此处st是可以改
         continue;
 
     return is;
+}
+
+// 测试 返回指向const对象的引用
+struct Vector {
+    int magval;
+};
+
+// 返回指向const对象的引用
+const Vector Max(const Vector &v1,const Vector &v2) {
+    if (v1.magval > v2.magval)
+        return v1;
+    else
+        return v2;
+}
+
+// 测试 返回对象
+const Vector &Add(const Vector &v1,const Vector &v2) {
+    Vector v3;// v3为一个局部变量 因此不返回对象的引用
+    v3.magval = v1.magval + v2.magval;
+
+    return v3;
+}
+
+int main() {
+//    String test;
+//    test.HowMany();
+    Vector v1 = {1};
+    Vector v2 = {2};
+    const Vector v = Max(v1,v2);
+
+    cout << v.magval << endl;
+
+    Vector v3;
+    v3 = Add(v1,v2);
+    // 如果返回局部对象的引用会出现丢失
+    cout << v3.magval << endl;
 }

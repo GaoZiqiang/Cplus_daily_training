@@ -41,14 +41,14 @@ public:
         // 1自检查
         if (this == &st)
             return *this;// 赋值给自身
-        // 2删除原来字符串
+        // 2删除原来字符串（释放成员指针原来指向的内存） 注意：这里一定要删除掉原来的
         delete [] str;// 将原来的那个str释放掉
         // 3深拷贝
         len = st.len;
         str = new char [len + 1];// 开辟一块新的区域
         strcpy(str,st.str);// 将st的值赋值给新变量
 
-        return *this;
+        return *this;// 返回一个指向调用对象的引用
     }
 
     ~StringBad();// 析构函数

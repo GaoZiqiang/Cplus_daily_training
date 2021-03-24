@@ -27,7 +27,7 @@ public:
     String & operator=(const String &);// 重赋值运算符=
     String & operator=(const char *);// 重赋值运算符=
     char & operator[](int i);// 中括号[]取值运算符
-    const char & operator[](int i) const;// 中括号[]取值运算符 不会对取出的值进行修改
+    const char & operator[](int i) const;// 中括号[]取值运算符 不能对取出的值进行修改
 
     // 重载运算符友元函数
     friend bool operator<(const String & st,const String & st2);
