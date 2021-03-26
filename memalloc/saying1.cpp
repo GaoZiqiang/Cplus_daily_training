@@ -16,7 +16,7 @@ int main() {
 
     cout << name << ",please enter up to " << ArSize << " short sayings <empty line to quit>:\n";
     String sayings[ArSize];// array of objects
-    char temp[MaxLen];
+    char temp[MaxLen];// temporary string storage
     int i;
     for (i = 0;i < ArSize;i ++) {
         cout << i +1 << ":";
@@ -33,10 +33,11 @@ int main() {
     if(total > 0) {
         cout << "Here are your sayings:\n";
         for (i = 0;i < total;i ++) {
-            cout << sayings[i][0] << ":" << sayings[i] << endl;
+            cout << i + 1  << ":" << sayings[i] << endl;
         }
 
-        int shortest = 0;
+        // get the shortest and first strings
+        int shortest = 0;// only index
         int  first = 0;
         for (i = 1;i < total;i ++) {
             if (sayings[i].length() < sayings[shortest].length())

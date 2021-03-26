@@ -153,17 +153,17 @@ const Vector &Add(const Vector &v1,const Vector &v2) {
     return v3;
 }
 
-int main() {
-//    String test;
-//    test.HowMany();
-    Vector v1 = {1};
-    Vector v2 = {2};
-    const Vector v = Max(v1,v2);
-
-    cout << v.magval << endl;
-
-    Vector v3;
-    v3 = Add(v1,v2);
-    // 如果返回局部对象的引用会出现丢失
-    cout << v3.magval << endl;
-}
+//int main() {
+////    String test;
+////    test.HowMany();
+//    Vector v1 = {1};
+//    Vector v2 = {2};
+//    const Vector v = Max(v1,v2);
+//
+//    cout << v.magval << endl;
+//
+//    Vector v3;
+//    v3 = Add(v1,v2);
+//    // 如果返回局部对象的引用会出现丢失
+//    cout << v3.magval << endl;
+//}
