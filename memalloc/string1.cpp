@@ -132,6 +132,27 @@ istream & operator>>(istream & is,String & st) {// 注意：此处st是可以改
     return is;
 }
 
+int String::size(const String st) {
+    return st.len;
+}
+
+bool String::isShorter(const String &s1,const String &s2) {
+
+    if (s1.len < s2.len)
+        cout << "s1 < s2" << endl;
+    else if (s1.len > s2.len)
+        cout << "s1 > s2" << endl;
+    else
+        cout << "s1 = s2" << endl;
+
+    // 因此下面的做法就不行
+    // s1 = "gaoziqiang1";
+    // s2 = "gaoh";
+
+    return s1.len < s2.len;
+}
+
+
 // 测试 返回指向const对象的引用
 struct Vector {
     int magval;
@@ -153,9 +174,14 @@ const Vector &Add(const Vector &v1,const Vector &v2) {
     return v3;
 }
 
-//int main() {
-////    String test;
-////    test.HowMany();
+int main() {
+
+    String s1("gaoziqiang");
+    String s2("gaohan");
+    String::isShorter(s1,s2);
+
+//    String test;
+//    test.HowMany();
 //    Vector v1 = {1};
 //    Vector v2 = {2};
 //    const Vector v = Max(v1,v2);
@@ -164,6 +190,6 @@ const Vector &Add(const Vector &v1,const Vector &v2) {
 //
 //    Vector v3;
 //    v3 = Add(v1,v2);
-//    // 如果返回局部对象的引用会出现丢失
+    // 如果返回局部对象的引用会出现丢失
 //    cout << v3.magval << endl;
-//}
+}

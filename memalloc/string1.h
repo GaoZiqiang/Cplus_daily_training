@@ -38,6 +38,8 @@ public:
 
     // 静态函数
     static int HowMany();
+    int size(const String st);
+    static bool isShorter(const String &s1,const String &s2);// 测试常量引用
 };
 
 #endif
