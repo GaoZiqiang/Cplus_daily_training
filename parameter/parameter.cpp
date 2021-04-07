@@ -54,7 +54,7 @@ int main() {
 
     // 输出&val，证明引用传递不会改变指针的地址
     std::cout << "address of val before is " << &val << std::endl;
-    cation_fact(val);// 引用传参的形式与指针传参不一样
+    cation_fact(val);// 引用传参的形式与指针传参不一样，引用传参不用显式的&符号
     // 输出val，证明引用传递改变形参
     std::cout << "val after passing by ciation is " << val << std::endl;
     std::cout << "address of val after is " << &val << std::endl;
