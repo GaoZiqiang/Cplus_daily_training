@@ -24,7 +24,7 @@ public:
     }
 };
 
-void fun(Base1 &ptr) {
+void fun(Base1 &ptr) {// 注意该方法参数的指针类型为Base1的指针
     ptr.display();
 }
 
@@ -34,6 +34,6 @@ int main() {
     Derived derived;
 
     fun(base1);
-    fun(base2);
-    fun(derived);
+    fun(base2);// 调用Base1的指针
+    fun(derived);// 调用Base1的指针
 }

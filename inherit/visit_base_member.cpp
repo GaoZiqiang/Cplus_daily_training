@@ -28,7 +28,7 @@ int main() {
     Derived d;
     Derived *p = &d;
 
-    d.var = 1;// 选择调用本派生类成员
+    d.var = 1;// 选择调用本派生类成员 默认的
     d.fun();
 
     d.Base1::var = 2;// 使用作用域分辨标识符
