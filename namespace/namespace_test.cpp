@@ -29,6 +29,7 @@ int Time;// 外部变量属于全局命名空间
 int main() {
     car::length = 3;
     cout << "the length of car is " << car::length << endl;
+    cout << "the length of c is " << c::length << endl;// 使用namespace的别名
 
     return 0;
 }
