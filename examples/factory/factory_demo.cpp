@@ -34,6 +34,7 @@ public:
 class Factory
 {
 public:
+    // 这是factory工厂模式的核心方法
     soapBase * creatSoap(PRODUCTTYPE type)// 根据需求按需制造产品
     {
         switch(type)
