@@ -36,10 +36,10 @@ public:
     }
 };
 
-// 创建工厂
+// 创建工厂 工厂类
 class Factory {
 public:
-    Shape* createShape(string ShapeType) {
+    Shape* createShape(string ShapeType) {// 创建产品的方法
 //        if(ShapeType == "")
 //            return "";
         if(ShapeType=="Rectangle")
