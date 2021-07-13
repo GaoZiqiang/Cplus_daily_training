@@ -1,3 +1,4 @@
+/* 验证虚函数和普通方法重载的不同 */
 #include <iostream>
 using namespace std;
 class A
