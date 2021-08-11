@@ -37,13 +37,19 @@ const int ArSize = 80;
 char * left(const char * str, int n = 1);
 
 int main() {
-//    char * name = {'h','h'};
-//    int i = 0;
-//    while(name[i]) {
-//        printf(name[i]);
-//        i++;
-//    }
-//    printf("size of name: %d",sizeof(name));
+    // 测试字符串以及字符数组的区别
+    //    using namespace std;
+//    // 字符串
+//    char name[10] = "gaohan";// 不能超过9个字符，最后一个为'\0'--系统自动添加
+//    // 字符数组
+//    char name1[10] = {'g','l','h'};// 一般意义上的字符数组
+//    char name2[10] = {'g','l','n','\0'};// 以空字符'\0'结尾的为字符串
+//
+//    // 字符串可以直接用cout打印--数组名字name为首指针，按照首地址一次向下读取并输出到标准输出流--遇到空字符'\0'结束
+//    cout << name << endl;
+//    cout << name1 << endl;
+//    cout << name2 << endl;
+
     using namespace std;
 
     char sample[ArSize];
