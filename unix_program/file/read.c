@@ -22,18 +22,7 @@ int main()
     printf("fd: %d\n", fd);
 
     // 读文件
-    int total_str_len = 0, str_len = 0;
-    while ((str_len = read(fd, buf, sizeof(buf))) > 0)
-    {
-        if (-1 == str_len)
-        {
-            perror("read");
-            close(fd);
-            exit(-1);
-        }
-        printf("read: %s\n", buf);
-        total_str_len += str_len;
-    }
+    // 只读一次
 //    int str_len = read(fd, buf, sizeof(buf));
 //    if (-1 == str_len)
 //    {
@@ -43,6 +32,27 @@ int main()
 //    }
 //
 //    printf("read: %s\n", buf);
+
+    // 循环读取
+    char *total_buf = (char*)malloc(sizeof(char) * 100);// 读到的所有内容
+    char *tmp_total_buf = total_buf;// 保存total_buf的起始位置
+    int total_str_len = 0, str_len = 0;
+    while ((str_len = read(fd, buf, sizeof(buf))) > 0)
+    {
+        if (-1 == str_len)
+        {
+            perror("read");
+            close(fd);
+            exit(-1);
+        }
+        //printf("read: %s\n", buf);
+        memcpy(total_buf, buf, str_len);
+        total_buf += str_len;// 指针后移
+        //total_str_len += str_len;
+    }
+
+    printf("total_buf: %s", tmp_total_buf);
+
     // 关闭
     close(fd);
 }
