@@ -5,7 +5,10 @@
 #include <fcntl.h>
 #include <stdio.h>
 
+// 显示文件类型
 void showFileType(struct stat *sb);
+// 显示文件权限
+void showFilePermission(struct stat *sb);
 
 int main(int argc, char *agrv[])
 {
@@ -28,6 +31,10 @@ int main(int argc, char *agrv[])
 
     // 文件类型判断
     showFileType(&sb);
+    // 文件权限判断
+    showFilePermission(&sb);
+
+    putchar('\n');
 
     // 关闭
     close(fd);
@@ -62,4 +69,24 @@ void showFileType(struct stat *sb)
             printf("unknown?\n");
             break;
     }
+}
+
+void showFilePermission(struct stat *sb)
+{
+//    if (sb->st_mode & S_IRWXU)
+//        printf("rwx");
+    if (sb->st_mode & S_IRUSR)
+        printf("r");
+    else
+        printf("-");
+
+    if (sb->st_mode & S_IWUSR)
+        printf("w");
+    else
+        printf("-");
+
+    if (sb->st_mode & S_IXUSR)
+        printf("x");
+    else
+        printf("-");
 }
