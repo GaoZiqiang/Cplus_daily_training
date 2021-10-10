@@ -37,7 +37,7 @@ int main()
     char *total_buf = (char*)malloc(sizeof(char) * 100);// 读到的所有内容
     char *tmp_total_buf = total_buf;// 保存total_buf的起始位置
     int total_str_len = 0, str_len = 0;
-    while ((str_len = read(fd, buf, sizeof(buf))) > 0)
+    while ((str_len = read(fd, buf, sizeof(buf))) > 0)// str_len:实际读取到的字符长度
     {
         if (-1 == str_len)
         {
