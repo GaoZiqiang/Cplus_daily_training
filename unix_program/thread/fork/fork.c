@@ -25,10 +25,11 @@ int main(void)
         //printf("hello, I am child process\n");
         glob++;                               /* modify variables */
         var++;
+        sleep(3);
     }
     else
     {
-        sleep(3);                             /* parent */
+        sleep(1);                             /* parent */
         //printf("hello, I am parent process\n");
     }
 
@@ -40,6 +41,7 @@ int main(void)
 //    {
 //        printf("hello, I am parent process, variable pid is child pid\n");
 //    }
+    printf("after fork\n");
     printf("pid = %d, pid = %d, glob = %d, var = %d\n", pid, getpid(), glob, var);
 
     return 0;
