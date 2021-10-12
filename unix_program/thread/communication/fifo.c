@@ -11,6 +11,7 @@ int main() {
     int wfd, rfd;
     char buf[30];
 
+    // SIGINT--Linux标准信号，键盘输入以中断进程
     signal(SIGINT, signal_fun);
     mkfifo(fifo_name1, S_IWUSR | S_IRUSR | S_IRGRP | S_IROTH);           //管道只能实现单向通信,需创建管道文件
     mkfifo(fifo_name2, S_IWUSR | S_IRUSR | S_IRGRP | S_IROTH);           //管道只能实现单向通信,需创建管道文件
