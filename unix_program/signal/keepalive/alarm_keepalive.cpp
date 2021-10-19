@@ -12,7 +12,7 @@
 #include <stdlib.h>
 #include <sys/epoll.h>
 #include <pthread.h>
-#include "../lst_timer.h" //之前所写的定时器头文件
+#include "lst_timer.h" //之前所写的定时器头文件
 
 #define FD_LIMIT 65535
 #define MAX_EVENT_NUMBER 1024
@@ -111,7 +111,7 @@ int main( int argc, char* argv[] )
     ret = socketpair( PF_UNIX, SOCK_STREAM, 0, pipefd );
     assert( ret != -1 );
     setnonblocking( pipefd[1] );
-    // 将pipefd[0]--pipe读端注册入epoll例程
+    // 将pipefd[0]--pipe读端注册入epoll例程--专门用来处理SIGALRM信号
     addfd( epollfd, pipefd[0] );
 
     // add all the interesting signals here
@@ -151,6 +151,7 @@ int main( int argc, char* argv[] )
                 timer->user_data = &users[connfd];
                 timer->cb_func = cb_func;// alarm处理函数
                 time_t cur = time( NULL );
+                // 建立新连接时设置expire
                 timer->expire = cur + 3 * TIMESLOT;
                 users[connfd].timer = timer;
                 timer_lst.add_timer( timer );
