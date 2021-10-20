@@ -1,7 +1,12 @@
 #include <stdio.h>
 #include "lst_timer.h"
 
-sort_timer_lst::~sort_timer_lst() {
+sort_timer_list::sort_timer_list() {
+    head = nullptr;
+    tail = nullptr;
+}
+
+sort_timer_list::~sort_timer_list() {
     util_timer* tmp = head;
     while(tmp) {
         head = tmp -> next;
@@ -10,22 +15,31 @@ sort_timer_lst::~sort_timer_lst() {
     }
 }
 
-void sort_timer_lst::add_timer(util_timer* timer) {
-    if(!timer) return;
+void sort_timer_list::add_timer(util_timer* timer) {
+    // timer链表为空
+    if(!timer)
+    {
+        return;
+    }
+
+    // 添加第一个timer
     if(!head) {
         head = tail = timer;
         return;
     }
+
     if(timer -> expire < head -> expire) {
         timer -> next = head;
         head -> prev = timer;
         head = timer;
         return;
     }
+
+    // 递归调用add_timer添加timer
     add_timer(timer, head);
 }
 
-void sort_timer_lst::adjust_timer(util_timer* timer) {
+void sort_timer_list::adjust_timer(util_timer* timer) {
     if(!timer) return;
     util_timer* tmp = timer -> next;
     if(!tmp || (timer -> expire < tmp -> expire)) return;
@@ -42,7 +56,7 @@ void sort_timer_lst::adjust_timer(util_timer* timer) {
     }
 }
 
-void sort_timer_lst::del_timer(util_timer* timer) {
+void sort_timer_list::del_timer(util_timer* timer) {
     if(!timer) return;
     if((timer == head) && (timer == tail)) {
         delete timer;
@@ -67,7 +81,7 @@ void sort_timer_lst::del_timer(util_timer* timer) {
     delete timer;
 }
 
-void sort_timer_lst::tick() {
+void sort_timer_list::tick(int epollfd) {
     // 没有客户端连接便return
     if(!head)
     {
@@ -82,11 +96,11 @@ void sort_timer_lst::tick() {
         // 判断超时
         if(cur < tmp -> expire)
         {
-            printf("客户端连接没有超时\n");
+            printf("客户端 %d 连接没有超时\n", epollfd);
             break;
         }
-        printf("客户端连接超时,即将断开连接\n");
-        tmp -> cb_func(tmp -> user_data);
+        printf("客户端 %d 连接超时,即将断开连接\n", epollfd);
+        tmp -> cb_func(tmp -> user_data, epollfd);
         head = tmp -> next;
         if(head) head -> prev = NULL;
         delete tmp;
@@ -94,7 +108,7 @@ void sort_timer_lst::tick() {
     }
 }
 
-void sort_timer_lst::add_timer(util_timer *timer, util_timer *lst_head) {
+void sort_timer_list::add_timer(util_timer *timer, util_timer *lst_head) {
     util_timer* prev = lst_head;
     util_timer* tmp = prev -> next;
     while(tmp) {
