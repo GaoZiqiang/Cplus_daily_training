@@ -1,3 +1,10 @@
+/*************************************************************************
+    > File Name: keep_alive.h
+    > Author: Ziqiang_Gao
+    > Mail: gaoziqianghi@163.com
+    > Created Time: Sat 10 Oct 2021 11:39:56 PM PST
+ ************************************************************************/
+
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
@@ -16,6 +23,7 @@ public:
     keep_aliver();
     ~keep_aliver();
 
+    static void get_pipefd();
     int setnonblocking(int fd);
     void addfd( int epollfd, int fd );
 

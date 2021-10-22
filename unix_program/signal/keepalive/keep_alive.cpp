@@ -18,12 +18,19 @@
 int pipefd[2];// 定义extern全局变量
 
 keep_aliver::keep_aliver() {
-    // 定义pipefd[2]
-    int ret = socketpair( PF_UNIX, SOCK_STREAM, 0, pipefd );
-    assert( ret != -1 );
+    // 这是一种愚蠢的做法--需要依赖类构造器初始化pipefd[2]
+    // 定义pipefd[2]--用于两个进程通信的读写通道fd
+//    int ret = socketpair( PF_UNIX, SOCK_STREAM, 0, pipefd );
+//    assert( ret != -1 );
 }
 
 keep_aliver::~keep_aliver() {
+}
+
+void keep_aliver::get_pipefd() {
+    // 定义pipefd[2]--用于两个进程通信的读写通道fd
+    int ret = socketpair( PF_UNIX, SOCK_STREAM, 0, pipefd );
+    assert( ret != -1 );
 }
 
 int keep_aliver::setnonblocking( int fd )
@@ -45,11 +52,12 @@ void keep_aliver::addfd( int epollfd, int fd )
 
 void keep_aliver::sig_handler( int sig )
 {
-    printf("捕获SIGALRM到信号: %d\n", sig);
+    printf("捕获SIGALRM信号: %d\n", sig);
     int save_errno = errno;
     int msg = sig;
-    // 问题出在这里
-    send( pipefd[1], ( char* )&msg, 1, 0 );// 捕获到超时信号--通过管道发送信息
+    printf("msg: %d\n", msg);
+    int str_len = send( pipefd[1], ( char* )&msg, 1, 0 );// 捕获到超时信号--通过管道发送信息
+    printf("send发送成功，str_len = %d\n", str_len);
     errno = save_errno;
 }
 
