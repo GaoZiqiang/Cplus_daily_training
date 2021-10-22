@@ -28,6 +28,9 @@ void sort_timer_list::add_timer(util_timer* timer) {
         return;
     }
 
+    // 插入需按序插入，时间复杂度会较大--时间轮法的插入为无序链表插入，只需要插入表头即可，时间复杂度为O(1)
+    // 升序--找第一个比自己大的--经排序后再插入链表--插入排序--时间复杂度为O(N^2)--最坏
+    // 为什么不用while直接找到呢？
     if(timer -> expire < head -> expire) {
         timer -> next = head;
         head -> prev = timer;
@@ -35,7 +38,7 @@ void sort_timer_list::add_timer(util_timer* timer) {
         return;
     }
 
-    // 递归调用add_timer添加timer
+    // 调用void add_timer(util_timer* timer, util_timer* lst_head);
     add_timer(timer, head);
 }
 
@@ -76,11 +79,13 @@ void sort_timer_list::del_timer(util_timer* timer) {
         delete timer;
         return;
     }
+    // 双向链表的删除操作
     timer -> prev -> next = timer -> next;
     timer -> next -> prev = timer -> prev;
     delete timer;
 }
 
+// 检查定时器链表中是否有定时器到期
 void sort_timer_list::tick(int epollfd) {
     // 没有客户端连接便return
     if(!head)
@@ -91,14 +96,16 @@ void sort_timer_list::tick(int epollfd) {
 
     printf("timer tick\n");
     time_t cur = time(NULL);
-    util_timer* tmp = head;
+    util_timer* tmp = head;// 升序链表--头结点的超时时长expire是最小的
     while(tmp) {
-        // 判断超时
+        // 判断超时--头结点没有超时便意味着后边的节点肯定也不会超时--所以只需要判断头结点即可
+        // 没有超时
         if(cur < tmp -> expire)
         {
             printf("客户端 %d 连接没有超时\n", epollfd);
             break;
         }
+        // 超时--从链表中删除
         printf("客户端 %d 连接超时,即将断开连接\n", epollfd);
         tmp -> cb_func(tmp -> user_data, epollfd);
         head = tmp -> next;

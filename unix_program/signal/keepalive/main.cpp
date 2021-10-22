@@ -1,3 +1,10 @@
+/*************************************************************************
+    > File Name: main.cpp
+    > Author: Ziqiang_Gao
+    > Mail: gaoziqianghi@163.com
+    > Created Time: Sat 10 Oct 2021 11:39:56 PM PST
+ ************************************************************************/
+
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
@@ -27,6 +34,7 @@ int main( int argc, char* argv[] )
         printf( "usage: %s ip_address port_number\n", basename( argv[0] ) );
         return 1;
     }
+    keep_aliver::get_pipefd();
     const char* ip = argv[1];
     int port = atoi( argv[2] );
 
@@ -56,6 +64,8 @@ int main( int argc, char* argv[] )
 //    ret = socketpair( PF_UNIX, SOCK_STREAM, 0, pipefd );
 //    assert( ret != -1 );
 
+
+    printf("in main, pipefd[0]: %d, pipefd[1]: %d\n", pipefd[0],pipefd[1]);
     ka.setnonblocking( pipefd[1] );
     // 将pipefd[0]--pipe读端注册入epoll例程--专门用来处理SIGALRM信号
     ka.addfd( epollfd, pipefd[0] );
@@ -65,6 +75,7 @@ int main( int argc, char* argv[] )
     ka.addsig( SIGTERM );
     bool stop_server = false;
 
+    // socket和定时器绑定
     client_data* users = new client_data[FD_LIMIT];
     bool timeout = false;
     // 开启alarm
@@ -90,15 +101,19 @@ int main( int argc, char* argv[] )
                 int connfd = accept( listenfd, ( struct sockaddr* )&client_address, &client_addrlength );
                 printf("---------------------与新的客户端 %d 建立连接----------\n", connfd);
                 ka.addfd( epollfd, connfd );
+                // 将socketfd与定时器绑定
                 users[connfd].address = client_address;
                 users[connfd].sockfd = connfd;
+                // 创建一个定时器timer--将定时事件封装成一个定时器timer
                 util_timer* timer = new util_timer;
-                timer->user_data = &users[connfd];
+                timer->user_data = &users[connfd];// 将users放入定时器timer
                 timer->cb_func = keep_aliver::cb_func;// alarm处理函数
                 time_t cur = time( NULL );
-                // 建立新连接时设置expire
+                // 建立新连接时设置expire--设置该sockfd到期时间
                 timer->expire = cur + 3 * TIMESLOT;
+                // 将socketfd与定时器绑定
                 users[connfd].timer = timer;
+                // 将timer添加到timer链表
                 timer_lst.add_timer( timer );
             }
             /*处理信号--pipefd[0]*/
@@ -142,6 +157,7 @@ int main( int argc, char* argv[] )
             else if(  events[i].events & EPOLLIN )
             {
                 memset( users[sockfd].buf, '\0', BUFFER_SIZE );
+                // 此为阻塞IO，若该recv阻塞了，则该次for循环便一直阻塞在这里，直到解除阻塞才进行下一轮for循环
                 ret = recv( sockfd, users[sockfd].buf, BUFFER_SIZE-1, 0 );
                 printf( "get %d bytes of client data %s from client %d\n", ret, users[sockfd].buf, sockfd );
                 util_timer* timer = users[sockfd].timer;
@@ -152,6 +168,7 @@ int main( int argc, char* argv[] )
                         keep_aliver::cb_func( &users[sockfd], epollfd );
                         if( timer )
                         {
+                            // 将该client的socketfd从timer链表中删除
                             timer_lst.del_timer( timer );
                         }
                     }
@@ -161,6 +178,7 @@ int main( int argc, char* argv[] )
                     keep_aliver::cb_func( &users[sockfd], epollfd );
                     if( timer )
                     {
+                        // 将该client的socketfd从timer链表中删除
                         timer_lst.del_timer( timer );
                     }
                 }
@@ -171,8 +189,8 @@ int main( int argc, char* argv[] )
                     {
                         time_t cur = time( NULL );
                         timer->expire = cur + 3 * TIMESLOT;
-                        // 收到消息--调整TIMESLOT时长--扩大3倍
                         printf( "adjust timer once\n" );
+                        // 收到消息--调整TIMESLOT时长--扩大3倍
                         timer_lst.adjust_timer( timer );
                     }
                 }
