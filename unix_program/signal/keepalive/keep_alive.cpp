@@ -15,7 +15,7 @@
 
 #include "keep_alive.h"
 
-int pipefd[2];// 定义extern全局变量
+int pipefd[2] = {0, 0};// 定义extern全局变量
 
 keep_aliver::keep_aliver() {
     // 这是一种愚蠢的做法--需要依赖类构造器初始化pipefd[2]
@@ -29,6 +29,7 @@ keep_aliver::~keep_aliver() {
 
 void keep_aliver::get_pipefd() {
     // 定义pipefd[2]--用于两个进程通信的读写通道fd
+    printf("in keep_alive.cpp, pipefd[0]: %d, pipefd[1]: %d\n", pipefd[0],pipefd[1]);
     int ret = socketpair( PF_UNIX, SOCK_STREAM, 0, pipefd );
     assert( ret != -1 );
 }
