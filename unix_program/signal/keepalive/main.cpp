@@ -22,6 +22,13 @@
 #include "lst_timer.h"
 #include "keep_alive.h"
 
+// 方法二：使用friend函数--需要在main函数中定义
+void get_pipefd() {
+    printf("in keep_alive.cpp, pipefd[0]: %d, pipefd[1]: %d\n", pipefd[0],pipefd[1]);
+    int ret = socketpair( PF_UNIX, SOCK_STREAM, 0, pipefd );
+    assert( ret != -1 );
+}
+
 // 设置static全局对象
 static keep_aliver ka;
 static sort_timer_list timer_lst;
@@ -34,7 +41,10 @@ int main( int argc, char* argv[] )
         printf( "usage: %s ip_address port_number\n", basename( argv[0] ) );
         return 1;
     }
-    keep_aliver::get_pipefd();
+    // 方法一：使用static方法
+//    keep_aliver::get_pipefd();
+    // 方法二：使用friend函数
+    get_pipefd();
     const char* ip = argv[1];
     int port = atoi( argv[2] );
 
@@ -63,7 +73,6 @@ int main( int argc, char* argv[] )
     // 将其设置为全局变量，由keep_aliver初始化
 //    ret = socketpair( PF_UNIX, SOCK_STREAM, 0, pipefd );
 //    assert( ret != -1 );
-
 
     printf("in main, pipefd[0]: %d, pipefd[1]: %d\n", pipefd[0],pipefd[1]);
     ka.setnonblocking( pipefd[1] );
@@ -184,7 +193,17 @@ int main( int argc, char* argv[] )
                 }
                 else
                 {
-                    //send( sockfd, users[sockfd].buf, BUFFER_SIZE-1, 0 );
+                    // 发送给client端口
+                    // 异常情况：
+                    // ret = send( sockfd, users[sockfd].buf, BUFFER_SIZE-1, 0 );
+                    // ret == -1 && errno = EAGAIN--内核写缓冲区满了
+                    // 解决方法：
+                    // 关注EPOLLOUT事件并添加到epoll空间
+//                    struct epoll_event event;
+//                    event.events = EPOLLOUT | EPOLLET;// 边缘触发
+//                    event.data.fd = sockfd;
+//                    // 添加到epoll空间
+//                    epoll_ctl(epollfd, EPOLL_CTL_MOD, sockfd, &event);
                     if( timer )
                     {
                         time_t cur = time( NULL );

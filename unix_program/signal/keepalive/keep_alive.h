@@ -23,7 +23,11 @@ public:
     keep_aliver();
     ~keep_aliver();
 
-    static void get_pipefd();
+    // 方法一:static成员方法--static成员方法访问非类成员变量
+    // 方法一:static成员方法--static成员方法访问非类成员变量
+//    static void get_pipefd();
+    // 方法二:friend函数
+    friend void get_pipefd();
     int setnonblocking(int fd);
     void addfd( int epollfd, int fd );
 
