@@ -3,10 +3,10 @@
 
 using namespace std;
 
+void changeAddr(int * p);
+void referenceTest(int &a);
+
 int main() {
-
-
-
     int updates = 6;
     /*错误示范*/
     //int* p_updates = updates;// 错误，原因：指针p_updates还未初始化，因此还不能赋值
@@ -173,4 +173,32 @@ int main() {
     delete [] psome;// 否则在delete时会将第一个元素漏掉
 
 
+    int *origin_p;
+    cout << "origin_p1: " << origin_p << endl;
+    changeAddr(origin_p);
+    cout << "origin_p2: " << origin_p << endl;
+
+
+    int aaa= 1;
+    cout << "aaa1: " << aaa << endl;
+    referenceTest(aaa);
+    cout << "aaa2: " << aaa << endl;
+
+    cout << "typeid(aaa).name(): " << (typeid(aaa)==typeid(int)) << endl;
+
+    int bbb = 1;
+    changeAddr(&bbb);
+    //cout << "bbb: " << bbb << endl;
+}
+
+// 做一组测试
+void changeAddr(int * p) {
+    //p = new int;
+//    p += 1;
+    cout << "*p: " << *p << endl;
+}
+
+// 引用传参测试
+void referenceTest(int &a) {
+    a += 1;
 }
