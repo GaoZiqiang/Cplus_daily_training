@@ -30,7 +30,7 @@ using namespace std;
 bool judgeSquareSum(int c) {
     for (long i = 0; i * i <= c; i++) {
         double tmp = sqrt(c - i * i);// double的是双精度类型，其有效位数为15~16位
-        if (tmp >= 0 && tmp == int(tmp)) {
+        if (tmp >= 0 && tmp == int(tmp)) {// 判断一个数是否为整数tmp == int(tmp)
             return true;
         }
     }
