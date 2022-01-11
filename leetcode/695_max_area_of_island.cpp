@@ -6,10 +6,12 @@
  *
  * 算法思想：
  * 核心：
- * 图的DFS或BFS遍历，每个岛屿就是一个联通子图
+ * 图的DFS或BFS遍历，每个岛屿就是一个连通子图
  *
  * 关键点：
- * 每一个点有上下左右四个方向（树有两个方向lchild rchild）
+ * 1 每一个点有上下左右四个方向（树有两个方向lchild rchild）
+ * 2 判断两个节点是否相邻的条件
+ * if (grid[i][j] == 1)即可
  *
  * 复杂度分析：
  * 时间复杂度：O(m*n)，数组中元素个数。
@@ -30,6 +32,7 @@ int islandDFS(vector<vector<int>>& grid, int i, int j) {
         return 0;
     if (0 == grid[i][j])
         return 0;// 已经访问过
+    // grid[i][j] == 1即表示两个节点相邻
     grid[i][j] = 0;// 设置访问标记为已访问
 
     // 继续遍历上下左右四个方向
