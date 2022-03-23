@@ -1,3 +1,6 @@
+// Decorator模式
+// 参考笔记：https://app.yinxiang.com/Home.action?_sourcePage=iRn4ewS_JTviMUD9T65RG_YvRLZ-1eYO3fqfqRu0fynRL_1nukNa4gH1t86pc1SP&__fp=YnzXXQo6qMY3yWPvuidLz-TPR6I9Jhx8&login=true&username=gaoziqianghi%40163.com#n=ed4b054e-8be0-49f9-a089-e5f79da96cfd&s=s3&ses=4&sh=2&sds=2&
+
 #include <iostream>
 
 using namespace std;
