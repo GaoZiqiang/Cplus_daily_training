@@ -52,51 +52,65 @@ public:
     }
 };
 
+// Decorator层
+class DecoratorStream : public Stream {
+protected:
+    DecoratorStream(Stream* _stream) : stream(_stream) {}
+    Stream* stream;
+};
+
 // 拓展操作
-class CryptoFileStream : public FileStream {
+// 加密操作
+class CryptoStream : public DecoratorStream {
 public:
-    virtual char read(int number) {
+    // 注入Decorator
+    CryptoStream(Stream* _stream) : DecoratorStream(_stream) {}
+    // 组合替代继承
+//    Stream* stream;// FileStream NetworkStream ... 运行时多态
+
+public:
+    virtual char read(int number) {// virtual虚函数来自基类Stream
         cout << "额外的加密操作\n";
-        FileStream::read(number);// 读文件流
+        stream->read(number);
     }
     virtual void seek(int position) {
         cout << "额外的加密操作\n";
-        FileStream::seek(position);// 定位文件流
+        stream->seek(position);
     }
     virtual void write(char data) {
         cout << "额外的加密操作\n";
-        FileStream::write(data);// 写文件流
+        stream->write(data);
     }
 };
 
-class CryptoNetworkStream : public FileStream {
+// 缓存操作
+class BufferedStream : public DecoratorStream {
 public:
-    virtual char read(int number) {
-        cout << "额外的加密操作\n";
-        FileStream::read(number);// 读网络流
+    // 注入Decorator
+    BufferedStream(Stream* _stream) : DecoratorStream(_stream) {}
+    // 组合替代继承
+//    Stream* stream;// FileStream NetworkStream ... 运行时多态
+
+public:
+    virtual char read(int number) {// virtual虚函数来自基类Stream
+        cout << "额外的buffer操作\n";
+        stream->read(number);
     }
     virtual void seek(int position) {
-        cout << "额外的加密操作\n";
-        FileStream::seek(position);// 定位网络流
+        cout << "额外的buffer操作\n";
+        stream->seek(position);
     }
     virtual void write(char data) {
-        cout << "额外的加密操作\n";
-        FileStream::write(data);// 写网络流
+        cout << "额外的buffer操作\n";
+        stream->write(data);
     }
 };
 
-class CryptoMemoryStream : public FileStream {
-public:
-    virtual char read(int number) {
-        cout << "额外的加密操作\n";
-        FileStream::read(number);// 读内存流
-    }
-    virtual void seek(int position) {
-        cout << "额外的加密操作\n";
-        FileStream::seek(position);// 定位内存流
-    }
-    virtual void write(char data) {
-        cout << "额外的加密操作\n";
-        FileStream::write(data);// 写内存流
-    }
-};
+int main() {
+    // 运行时装配？
+    FileStream* fs = new FileStream();
+    CryptoStream* cs = new CryptoStream(fs);
+    BufferedStream* bs = new BufferedStream(fs);
+    cs->read(1);
+    bs->read(1);
+}
