@@ -6,33 +6,40 @@ using namespace std;
 
 class Base {
 public:
-    Base(int data) : ma(data) {}
-    virtual void show() {cout << "Base::show()" << endl;};
-    virtual void show(int) {cout << "Base::show(int)" << endl;}
-
-protected:
-    int ma;
+    Base() {}
+    ~Base() {}
+//    void print();// 普通函数只声明不定义
+    virtual void show() {};// virtual函数只声明不定义
+//    virtual void show() {cout << "Base::show()" << endl;};// virtual函数声明且定义
+//public:
+//    int mm;
+//
+//protected:
+//    int ma;
 };
 
-class Derive : public Base {
-public:
-    Derive(int data) : Base(data), mb(data) {}
-    virtual void show() {cout << "Derive::show()" << endl;}
-
-protected:
-    int mb;
-};
+//class Derive : public Base {
+//public:
+//    Derive(int data) : Base(data), mb(data) {}
+//    virtual void show();
+//    virtual void show(int) {cout << "Derive::show()" << endl;}
+//
+//protected:
+//    int mb;
+//};
 
 int main() {
-    Derive d(10);
-    Base *pb = &d;
-
-    pb->show();
-    pb->show(50);
-
-    cout << sizeof(Base) << endl;
-    cout << sizeof(Derive) << endl;
-
-    cout << typeid(pb).name() << endl;// class Base*
-    cout << typeid(*pb).name() << endl;// class Derive
+    Base base;
+    cout << "sizeof(base): " << sizeof(base) << endl;
+//    Base d(10);
+//    Base *pb = &d;
+//
+//    pb->show();
+//    pb->show(50);
+//
+//    cout << sizeof(Base) << endl;
+//    cout << sizeof(Derive) << endl;
+//
+//    cout << typeid(pb).name() << endl;// class Base*
+//    cout << typeid(*pb).name() << endl;// class Derive
 }
