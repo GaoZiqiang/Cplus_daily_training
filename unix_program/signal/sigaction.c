@@ -23,7 +23,7 @@ int main()
 #if 0
     // 设置对信号的处理方式--新的or旧的？
     struct sigaction act;
-    // 使用旧的信号处理函数
+    // 使用旧的信号处理函数--sa_handler，新式使用sa_sigaction
     act.sa_handler = fun;
     // 标志位为默认 默认使用旧的信号处理函数
     act.sa_flags = 0;
