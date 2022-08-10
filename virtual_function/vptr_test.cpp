@@ -1,4 +1,4 @@
-// 虚函数表测试
+// 单继承时虚函数表测试
 
 #include <iostream>
 using namespace std;
