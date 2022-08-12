@@ -1,6 +1,7 @@
 // 实现strlen()函数
 
 #include <cstddef>
+#include <assert.h>
 
 size_t strlen(const char* str) {// str不能修改
     assert(str != NULL);// str不能为空
