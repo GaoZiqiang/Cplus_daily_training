@@ -5,36 +5,36 @@
 
 using namespace std;
 
-void merge(vector<int>& origin, int low, int mid, int high) {
-    vector<int> copy(origin);
+void merge(vector<int>& nums, int low, int high) {
+    int mid = (low + high) / 2;
+    vector<int> copy(nums);
 
-    int i = low, j = mid + 1, k = low;
-
+    int i = low, j = mid + 1;
+    int k = low;
     while (i <= mid && j <= high) {
-        if (origin[i] < origin[j]) {
-            copy[k++] = origin[i++];
-        } else {
-            copy[k++] = origin[j++];
-        }
+        if (nums[i] < nums[j]) copy[k++] = nums[i++];
+        else copy[k++] = nums[j++];
+//        i++;j++;
     }
 
-    while (i <= mid) copy[k++] = origin[i++];
-    while (j <= high) copy[k++] = origin[j++];
+    while (i <= mid) copy[k++] = nums[i++];
+    while (j <= high) copy[k++] = nums[j++];
 
-    for (int i = low; i <= high; i++) origin[i] = copy[i];
+    for (int i = low; i <= high; i++) nums[i] = copy[i];
 
     return;
 }
 
-void mergeSort(vector<int>& origin, int low, int high) {
+void mergeSort(vector<int>& nums, int low, int high) {
     if (low >= high) return;
 
     int mid = (low + high) / 2;
-    mergeSort(origin, low, mid);
-    mergeSort(origin, mid+1, high);
-    merge(origin, low, mid, high);
 
-    return;
+    // 分
+    mergeSort(nums, low, mid);
+    mergeSort(nums, mid+1, high);
+    // merge
+    merge(nums, low, high);
 }
 
 int main() {
