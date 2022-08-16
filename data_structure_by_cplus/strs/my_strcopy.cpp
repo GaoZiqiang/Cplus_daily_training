@@ -26,3 +26,37 @@ int main() {
 
     return 0;
 }
+
+// 拷贝构造
+String& String::String(const String& str) {
+    this->m_data = new char[sizeof(str.m_data) + 1];
+    strcpy(this->m_data, str.m_data);
+
+    return *this;
+}
+
+// 拷贝赋值
+String& String::operator=(const String& str) {
+    if (*this == str) return *this;
+
+    delete[] this->m_data;
+
+    this->m_data = new char[sizeof(str.m_data) + 1];
+    strcpy(this->m_data, str.m_data);
+
+    return *this;
+}
+
+
+#include <assert.h>
+
+void strcpy(char* dest, char* src) {
+    assert(dest != NULL && src != NULL);// 要同时满足
+
+    char* destCopy = dest;
+    while (*src != '\0') {
+        *destCopy++ = *src++;
+    }
+
+    return;
+}
