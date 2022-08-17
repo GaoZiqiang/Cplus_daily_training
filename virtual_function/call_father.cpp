@@ -29,7 +29,12 @@ int main()
     // 如下调用
     // 父类的虚函数被子类覆盖后，若指针强行调用父类的虚函数，编译器直接帮你在函数所在区找到函数，
     // 直接调用call，简单暴力而优雅......
-//    (*ptrfa).fa::show();
-    (*ptrfa).fa::print();
+
+    // 方法一
+    (*ptrfa).fa::show();
+
+    // 方法二
+    fa faObj;
+    faObj.fa::show();
     return 0;
 }
