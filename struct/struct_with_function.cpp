@@ -1,3 +1,5 @@
+// struct中添加函数
+
 #include<iostream>
 #include<string>
 
@@ -5,8 +7,11 @@ using namespace std;
 
 struct Person
 {
+public:
     Person(string name);// 构造函数
     void greet(string other_name);// 定义函数
+
+private:
     string m_name;
 };
 
