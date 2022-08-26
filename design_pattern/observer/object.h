@@ -1,3 +1,5 @@
+// 目标
+
 #ifndef SUBJECT_H_
 #define SUBJECT_H_
 
@@ -9,8 +11,8 @@ using namespace std;
 class Subject {
 private:
     vector<Obserber*> m_observers;
+    
 public:
-
     void attach(Obserber* obs) {
         m_observers.push_back(obs);
     }
