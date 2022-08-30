@@ -31,10 +31,13 @@ int main()
     // 直接调用call，简单暴力而优雅......
 
     // 方法一
-    (*ptrfa).fa::show();
+//    (*ptrfa).fa::show();
 
     // 方法二
     fa faObj;
-    faObj.fa::show();
+//    faObj.fa::show();
+
+    // 方法三
+    faObj.show();
     return 0;
 }
