@@ -12,6 +12,7 @@ public:
     virtual void update() = 0;
 };
 
+// 观察者实例
 class Obs1 : public Obserber {
 public:
     virtual void update() {

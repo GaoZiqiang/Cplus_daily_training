@@ -1,4 +1,4 @@
-#include "subject.h"
+#include "object.h"
 #include "observer.h"
 
 int main() {
