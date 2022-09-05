@@ -23,10 +23,12 @@ public:
 
 // 贷方
 class zhangSan : public Debit {
-public:
+public
+    // 借钱
     void borrow(Credit* credit) override {
         allCredits.push_back(credit);
     }
+    // 通知还钱
     void notifyCredits() override {// 依次通知债主
         for (auto& credit : allCredits) credit->takeMoney();
     }
