@@ -14,13 +14,13 @@ String::~String() {
     delete[] this->m_data;
 }
 
-// 拷贝构造
+// 拷贝构造(构造：原来不存在，直接创建新的字符串空间)
 String::String(const String& str) {
     this->m_data = new char[strlen(str.m_data) + 1];
     strcpy(this->m_data, str.m_data);
 }
 
-// 拷贝赋值
+// 拷贝赋值(赋值：原来存在，所以需要先删除再创建新的字符串空间)
 String& String::operator=(const String& str) {
     // 自我赋值
     if (this == &str)
