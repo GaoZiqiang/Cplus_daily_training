@@ -51,3 +51,44 @@ ListNode* merge_sort(ListNode* head) {
     // merg从短合并成长的 因此merge_sort要递归到一个节点为止
     return merge(merge_sort(head), merge_sort(mid));
 }
+
+ListNode* merge(ListNode* head1, ListNode* head2) {
+    if (!head1 && !head2) return nullptr;
+    if (!head1) return head2;
+    if (!head2) return head1;
+
+    ListNode* pseudoHead = new ListNode(-1);
+    ListNode* work = pseudoHead;
+
+    while (head1 && head2) {
+        if (head1->val < head2->val) {
+            work->next = head1;
+            work = head1;
+            head1 = head1->next;
+        } else {
+            work->next = head2;
+            work = head2;
+            head2 = head2->next;
+        }
+    }
+
+    return pseudoHead->next;
+}
+
+ListNode* mergeSort(ListNode* head) {
+    if (!head) return nullptr;
+
+    // 找中间位置节点
+    ListNode* slow = head;
+    ListNode* fast = head;
+
+    while (fast && fast->next) {
+        slow = slow->next;
+        fast = fast->next->next;
+    }
+
+    ListNode* mid = slow->next;
+    slow->next = nullptr;
+
+    return merge(mergeSort(head), mergeSort(mid));
+}
