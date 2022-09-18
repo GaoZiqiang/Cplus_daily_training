@@ -61,7 +61,7 @@ int partition(vector<int>& nums, int left, int right) {
 }
 
 void quickSort(vector<int>& nums, int left, int right) {
-    if (left > right) return;
+    if (left >= right) return;
 
     int mid = partition(nums, left, right);
 
