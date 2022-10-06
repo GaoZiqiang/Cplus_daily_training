@@ -9,6 +9,7 @@ int main() {
     auto pointer2 = pointer; // 引用计数+1
     auto pointer3 = pointer; // 引用计数+1
     int *p = pointer.get(); // 这样不会增加引用计数
+    cout << "sizeof(pointer) = " << sizeof(pointer) << endl;
     std::cout << "pointer.use_count() = " << pointer.use_count() << std::endl; // 3
     std::cout << "pointer2.use_count() = " << pointer2.use_count() << std::endl; // 3
     std::cout << "pointer3.use_count() = " << pointer3.use_count() << std::endl; // 3

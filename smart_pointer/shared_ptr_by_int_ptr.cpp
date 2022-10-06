@@ -6,7 +6,7 @@ public:
     Student()
     {
         m_pCount = new int;
-        *m_pCount = 1;
+        *m_pCount = 1;// 初始化shared_ptr
     };
 
     ~Student()
@@ -61,13 +61,14 @@ Student& Student::operator=(Student &obj)
         return *this;
     }
     int count = --(*m_pCount);
+    // ?
     if(count == 0) {
         delete m_pszName;
         m_pszName = nullptr;
     }
     m_pszName = obj.m_pszName;
     m_pCount = obj.m_pCount;
-    (*m_pCount)++;
+    (*m_pCount)++;// 指针计数+1
     return *this;
 }
 
