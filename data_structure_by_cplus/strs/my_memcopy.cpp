@@ -4,7 +4,7 @@
 #include <iostream>
 
 template <typename T>
-void* memcopy(void* dest, void* src, size_t count) {
+void* memcopy(void* dest, const void* src, size_t count) {// 优化：srr地址不可修改
     void* destCopy = dest;// 不能在dest上进行赋值操作
 
     while (count-- > 0) {
